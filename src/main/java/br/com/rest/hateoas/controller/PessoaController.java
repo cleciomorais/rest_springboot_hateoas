@@ -38,11 +38,15 @@ public class PessoaController {
 
 	@GetMapping("/all")
 	public List<PessoaVO> findAll() {
-		List<PessoaVO> vos = pessoaService.findAll(); 
-		vos.stream().forEach( p -> { p.add( linkTo( methodOn( PessoaController.class ).findById(p.getIdPessoa()) ).withSelfRel() );
-									 p.add( linkTo( methodOn( PessoaController.class ).delete(p.getIdPessoa()) ).withRel("delete") );
-								   }) ;
-		return vos;
+		List<PessoaVO> pessoasVO = pessoaService.findAll(); 
+		pessoasVO
+			.stream()
+			.forEach( 
+				p -> { p.add( linkTo( methodOn( PessoaController.class ).findById(p.getIdPessoa()) ).withSelfRel() );
+					   p.add( linkTo( methodOn( PessoaController.class ).delete(p.getIdPessoa()) ).withRel("delete") );
+					 }
+			) ;
+		return pessoasVO;
 	}
 	
 	@PostMapping("/add")
